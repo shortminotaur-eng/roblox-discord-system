@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roblox & Discord Link</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0e1117;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    input { width: 250px; }
+    button {
+      background: #5865F2;
+      color: white;
+      cursor: pointer;
+    }
+    .gamepasses {
+      margin-top: 30px;
+    }
+    .gamepass {
+      background: #1e2128;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 10px auto;
+      width: 250px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔗 Link Accounts & Buy Gamepasses</h1>
+  <p>Enter your Discord and Roblox usernames:</p>
+
+  <input id="discord" placeholder="Discord Username">
+  <input id="roblox" placeholder="Roblox Username">
+  <br>
+  <button onclick="register()">Submit</button>
+
+  <div id="result"></div>
+  <div class="gamepasses" id="gamepasses" style="display:none;">
+    <h2>🎮 Gamepasses</h2>
+    <div class="gamepass">
+      <p>Gamepass A - 50 Robux</p>
+      <button onclick="buy('gamepassA', 50)">Buy</button>
+    </div>
+    <div class="gamepass">
+      <p>Gamepass B - 100 Robux</p>
+      <button onclick="buy('gamepassB', 100)">Buy</button>
+    </div>
+  </div>
+
+  <script>
+    async function register() {
+      const discord = document.getElementById('discord').value.trim();
+      const roblox = document.getElementById('roblox').value.trim();
+      if (!discord || !roblox) return alert('Please enter both usernames.');
+
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ discord, roblox })
+      });
+      const data = await res.json();
+      if (data.error) return alert('Error: ' + data.error);
+      document.getElementById('result').innerHTML = 
+        `✅ Registered! Token: ${data.token}`;
+      document.getElementById('gamepasses').style.display = 'block';
+    }
+
+    async function buy(pass, amount) {
+      alert(`This would trigger a Roblox Gamepass purchase for ${amount} Robux.`);
+      // Here, Roblox purchase logic would run and call /webhook/purchase from server.js
+    }
+  </script>
+</body>
+</html>
