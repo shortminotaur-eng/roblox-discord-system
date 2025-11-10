@@ -1,0 +1,14 @@
+{
+  "name": "roblox-discord-system",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.2.0",
+    "body-parser": "^1.20.2",
+    "discord.js": "^14.13.0"
+  }
+}
